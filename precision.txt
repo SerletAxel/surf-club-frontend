@@ -1,0 +1,5 @@
+feed => shop
+Post = > Products
+post => product
+SinglePost => SingleProduct
+loadPosts => loadProducts
