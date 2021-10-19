@@ -7,8 +7,8 @@ import Toolbar from './components/Toolbar/Toolbar';
 import MainNavigation from './components/Navigation/MainNavigation/MainNavigation';
 import MobileNavigation from './components/Navigation/MobileNavigation/MobileNavigation';
 import ErrorHandler from './components/ErrorHandler/ErrorHandler';
-import FeedPage from './pages/Feed/Feed';
-import SinglePostPage from './pages/Feed/SinglePost/SinglePost';
+import ShopPage from './pages/Shop/Shop';
+import SingleProductPage from './pages/Shop/SingleProduct/SingleProduct';
 import LoginPage from './pages/Auth/Login';
 import SignupPage from './pages/Auth/Signup';
 import './App.css';
@@ -59,7 +59,7 @@ class App extends Component {
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:8080/auth/login', {
+    fetch('http://localhost:3333/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:8080/auth/signup', {
+    fetch('http://localhost:3333/auth/signup', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -192,13 +192,13 @@ class App extends Component {
             path="/"
             exact
             render={props => (
-              <FeedPage userId={this.state.userId} token={this.state.token} />
+              <ShopPage userId={this.state.userId} token={this.state.token} />
             )}
           />
           <Route
-            path="/:postId"
+            path="/:productId"
             render={props => (
-              <SinglePostPage
+              <SingleProductPage
                 {...props}
                 userId={this.state.userId}
                 token={this.state.token}

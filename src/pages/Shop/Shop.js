@@ -1,28 +1,28 @@
 import React, { Component, Fragment } from 'react';
 
-import Post from '../../components/Feed/Post/Post';
+import Product from '../../components/Shop/Product/Product';
 import Button from '../../components/Button/Button';
-import FeedEdit from '../../components/Feed/FeedEdit/FeedEdit';
+import ShopEdit from '../../components/Shop/ShopEdit/ShopEdit';
 import Input from '../../components/Form/Input/Input';
 import Paginator from '../../components/Paginator/Paginator';
 import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
-import './Feed.css';
+import './Shop.css';
 
-class Feed extends Component {
+class Shop extends Component {
   state = {
     isEditing: false,
-    posts: [],
-    totalPosts: 0,
-    editPost: null,
+    products: [],
+    totalProducts: 0,
+    editProduct: null,
     status: '',
-    postPage: 1,
-    postsLoading: true,
+    productPage: 1,
+    productsLoading: true,
     editLoading: false
   };
 
   componentDidMount() {
-    fetch('http://localhost:8080/auth/status', {
+    fetch('http://localhost:3333/auth/status', {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -38,43 +38,43 @@ class Feed extends Component {
       })
       .catch(this.catchError);
 
-    this.loadPosts();
+    this.loadProducts();
   }
 
-  loadPosts = direction => {
+  loadProducts = direction => {
     if (direction) {
-      this.setState({ postsLoading: true, posts: [] });
+      this.setState({ productsLoading: true, products: [] });
     }
-    let page = this.state.postPage;
+    let page = this.state.productPage;
     if (direction === 'next') {
       page++;
-      this.setState({ postPage: page });
+      this.setState({ productPage: page });
     }
     if (direction === 'previous') {
       page--;
-      this.setState({ postPage: page });
+      this.setState({ productPage: page });
     }
-    fetch('http://localhost:8080/feed/posts?page=' + page, {
+    fetch('http://localhost:3333/shop/products?page=' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
     })
       .then(res => {
         if (res.status !== 200) {
-          throw new Error('Failed to fetch posts.');
+          throw new Error('Failed to fetch products.');
         }
         return res.json();
       })
       .then(resData => {
         this.setState({
-          posts: resData.posts.map(post => {
+          products: resData.products.map(product => {
             return {
-              ...post,
-              imagePath: post.imageUrl
+              ...product,
+              imagePath: product.imageUrl
             };
           }),
-          totalPosts: resData.totalItems,
-          postsLoading: false
+          totalProducts: resData.totalItems,
+          productsLoading: false
         });
       })
       .catch(this.catchError);
@@ -82,7 +82,7 @@ class Feed extends Component {
 
   statusUpdateHandler = event => {
     event.preventDefault();
-    fetch('http://localhost:8080/auth/status', {
+    fetch('http://localhost:3333/auth/status', {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + this.props.token,
@@ -104,37 +104,38 @@ class Feed extends Component {
       .catch(this.catchError);
   };
 
-  newPostHandler = () => {
+  newProductHandler = () => {
     this.setState({ isEditing: true });
   };
 
-  startEditPostHandler = postId => {
+  startEditProductHandler = productId => {
     this.setState(prevState => {
-      const loadedPost = { ...prevState.posts.find(p => p._id === postId) };
+      const loadedProduct = { ...prevState.products.find(p => p._id === productId) };
 
       return {
         isEditing: true,
-        editPost: loadedPost
+        editProduct: loadedProduct
       };
     });
   };
 
   cancelEditHandler = () => {
-    this.setState({ isEditing: false, editPost: null });
+    this.setState({ isEditing: false, editProduct: null });
   };
 
-  finishEditHandler = postData => {
+  finishEditHandler = productData => {
     this.setState({
       editLoading: true
     });
     const formData = new FormData();
-    formData.append('title', postData.title);
-    formData.append('content', postData.content);
-    formData.append('image', postData.image);
-    let url = 'http://localhost:8080/feed/post';
+    formData.append('name', productData.name);
+    formData.append('price', productData.price);
+    formData.append('inStock', productData.inStock);
+    formData.append('image', productData.image);
+    let url = 'http://localhost:3333/shop/product';
     let method = 'POST';
-    if (this.state.editPost) {
-      url = 'http://localhost:8080/feed/post/' + this.state.editPost._id;
+    if (this.state.editProduct) {
+      url = 'http://localhost:3333/shop/product/' + this.state.editProduct._id;
       method = 'PUT';
     }
 
@@ -147,33 +148,34 @@ class Feed extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Creating or editing a post failed!');
+          throw new Error('Creating or editing a product failed!');
         }
         return res.json();
       })
       .then(resData => {
         console.log(resData);
-        const post = {
-          _id: resData.post._id,
-          title: resData.post.title,
-          content: resData.post.content,
-          creator: resData.post.creator,
-          createdAt: resData.post.createdAt
+        const product = {
+          _id: resData.product._id,
+          name: resData.product.name,
+          shop: resData.product.shop.name,
+          price: resData.product.price,
+          inStock: resData.product.inStock,
+          createdAt: resData.product.createdAt
         };
         this.setState(prevState => {
-          let updatedPosts = [...prevState.posts];
-          if (prevState.editPost) {
-            const postIndex = prevState.posts.findIndex(
-              p => p._id === prevState.editPost._id
+          let updatedProducts = [...prevState.products];
+          if (prevState.editProduct) {
+            const productIndex = prevState.products.findIndex(
+              p => p._id === prevState.editProduct._id
             );
-            updatedPosts[postIndex] = post;
-          } else if (prevState.posts.length < 2) {
-            updatedPosts = prevState.posts.concat(post);
+            updatedProducts[productIndex] = product;
+          } else if (prevState.products.length < 2) {
+            updatedProducts = prevState.products.concat(product);
           }
           return {
-            posts: updatedPosts,
+            products: updatedProducts,
             isEditing: false,
-            editPost: null,
+            editProduct: null,
             editLoading: false
           };
         });
@@ -182,7 +184,7 @@ class Feed extends Component {
         console.log(err);
         this.setState({
           isEditing: false,
-          editPost: null,
+          editProduct: null,
           editLoading: false,
           error: err
         });
@@ -193,9 +195,9 @@ class Feed extends Component {
     this.setState({ status: value });
   };
 
-  deletePostHandler = postId => {
-    this.setState({ postsLoading: true });
-    fetch('http://localhost:8080/feed/post/' + postId, {
+  deleteProductHandler = productId => {
+    this.setState({ productsLoading: true });
+    fetch('http://localhost:3333/shop/product/' + productId, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + this.props.token
@@ -203,20 +205,20 @@ class Feed extends Component {
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw new Error('Deleting a post failed!');
+          throw new Error('Deleting a product failed!');
         }
         return res.json();
       })
       .then(resData => {
         console.log(resData);
         this.setState(prevState => {
-          const updatedPosts = prevState.posts.filter(p => p._id !== postId);
-          return { posts: updatedPosts, postsLoading: false };
+          const updatedProducts = prevState.products.filter(p => p._id !== productId);
+          return { products: updatedProducts, productsLoading: false };
         });
       })
       .catch(err => {
         console.log(err);
-        this.setState({ postsLoading: false });
+        this.setState({ productsLoading: false });
       });
   };
 
@@ -232,14 +234,14 @@ class Feed extends Component {
     return (
       <Fragment>
         <ErrorHandler error={this.state.error} onHandle={this.errorHandler} />
-        <FeedEdit
+        <ShopEdit
           editing={this.state.isEditing}
-          selectedPost={this.state.editPost}
+          selectedProduct={this.state.editProduct}
           loading={this.state.editLoading}
           onCancelEdit={this.cancelEditHandler}
           onFinishEdit={this.finishEditHandler}
         />
-        <section className="feed__status">
+        <section className="shop__status">
           <form onSubmit={this.statusUpdateHandler}>
             <Input
               type="text"
@@ -253,38 +255,39 @@ class Feed extends Component {
             </Button>
           </form>
         </section>
-        <section className="feed__control">
-          <Button mode="raised" design="accent" onClick={this.newPostHandler}>
+        <section className="shop__control">
+          <Button mode="raised" design="accent" onClick={this.newProductHandler}>
             Nouveau produit
           </Button>
         </section>
-        <section className="feed">
-          {this.state.postsLoading && (
+        <section className="shop">
+          {this.state.productsLoading && (
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
               <Loader />
             </div>
           )}
-          {this.state.posts.length <= 0 && !this.state.postsLoading ? (
-            <p style={{ textAlign: 'center' }}>No posts found.</p>
+          {this.state.products.length <= 0 && !this.state.productsLoading ? (
+            <p style={{ textAlign: 'center' }}>No products found.</p>
           ) : null}
-          {!this.state.postsLoading && (
+          {!this.state.productsLoading && (
             <Paginator
-              onPrevious={this.loadPosts.bind(this, 'previous')}
-              onNext={this.loadPosts.bind(this, 'next')}
-              lastPage={Math.ceil(this.state.totalPosts / 2)}
-              currentPage={this.state.postPage}
+              onPrevious={this.loadProducts.bind(this, 'previous')}
+              onNext={this.loadProducts.bind(this, 'next')}
+              lastPage={Math.ceil(this.state.totalProducts / 2)}
+              currentPage={this.state.productPage}
             >
-              {this.state.posts.map(post => (
-                <Post
-                  key={post._id}
-                  id={post._id}
-                  author={post.creator.name}
-                  date={new Date(post.createdAt).toLocaleDateString('en-US')}
-                  title={post.title}
-                  image={post.imageUrl}
-                  content={post.content}
-                  onStartEdit={this.startEditPostHandler.bind(this, post._id)}
-                  onDelete={this.deletePostHandler.bind(this, post._id)}
+              {this.state.products.map(product => (
+                <Product
+                  key={product._id}
+                  id={product._id}
+                  shop={product.shop.name}
+                  date={new Date(product.createdAt).toLocaleDateString('en-US')}
+                  name={product.name}
+                  image={product.imageUrl}
+                  price={product.price}
+                  instock={product.instock}
+                  onStartEdit={this.startEditProductHandler.bind(this, product._id)}
+                  onDelete={this.deleteProductHandler.bind(this, product._id)}
                 />
               ))}
             </Paginator>
@@ -295,4 +298,4 @@ class Feed extends Component {
   }
 }
 
-export default Feed;
+export default Shop;

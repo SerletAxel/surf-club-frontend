@@ -13,7 +13,7 @@ const modal = props =>
       <div className="modal__content">{props.children}</div>
       <div className="modal__actions">
         <Button design="danger" mode="flat" onClick={props.onCancelModal}>
-          Cancel
+          Annuler
         </Button>
         <Button
           mode="raised"
@@ -21,7 +21,7 @@ const modal = props =>
           disabled={!props.acceptEnabled}
           loading={props.isLoading}
         >
-          Accept
+          Accepter
         </Button>
       </div>
     </div>,
