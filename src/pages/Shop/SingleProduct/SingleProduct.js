@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 
 import Image from '../../../components/Image/Image';
 import './SingleProduct.css';
-
+/**
+ * SingleProduct component creation
+ * this component defines how a single product details will be represented
+ */
 class SingleProduct extends Component {
   state = {
     name: '',
@@ -16,7 +19,7 @@ class SingleProduct extends Component {
     weight:'',
     inStock:''
   };
-
+//fetch shop product from the API by productId
   componentDidMount() {
     const productId = this.props.match.params.productId;
     fetch('http://localhost:3333/shop/product/' + productId, {
@@ -48,7 +51,18 @@ class SingleProduct extends Component {
         console.log(err);
       });
   }
-
+/**
+ * 
+ * @returns single-product with: 
+ * name
+ * creation date
+ * price
+ * inStock status
+ * image
+ * size
+ * weight
+ * the shop name
+ */
   render() {
     return (
       <section className="single-product">

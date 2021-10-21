@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Input.css';
-
+//defines paths for files-picking
 const filePicker = props => (
   <div className="input">
     <label htmlFor={props.id}>{props.label}</label>

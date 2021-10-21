@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Button from '../Button/Button';
 import './Modal.css';
-
+//defines modal that is displayed when an error occurs
 const modal = props =>
   ReactDOM.createPortal(
     <div className="modal">

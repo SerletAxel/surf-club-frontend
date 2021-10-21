@@ -2,7 +2,7 @@ import React from 'react';
 
 import Image from './Image';
 import './Avatar.css';
-
+//imageUrl component
 const avatar = props => (
   <div
     className="avatar"

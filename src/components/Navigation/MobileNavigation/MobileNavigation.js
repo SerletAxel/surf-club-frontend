@@ -2,7 +2,7 @@ import React from 'react';
 
 import NavigationItems from '../NavigationItems/NavigationItems';
 import './MobileNavigation.css';
-
+//defines navigation menu on mobile depending on login status
 const mobileNavigation = props => (
   <nav className={['mobile-nav', props.open ? 'open' : ''].join(' ')}>
     <ul

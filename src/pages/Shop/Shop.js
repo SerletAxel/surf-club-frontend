@@ -8,7 +8,10 @@ import Paginator from '../../components/Paginator/Paginator';
 import Loader from '../../components/Loader/Loader';
 import ErrorHandler from '../../components/ErrorHandler/ErrorHandler';
 import './Shop.css';
-
+/**
+ * Shop component creation
+ * loads available products by fetching them from the API
+ */
 class Shop extends Component {
   state = {
     isEditing: false,
@@ -20,7 +23,7 @@ class Shop extends Component {
     productsLoading: true,
     editLoading: false
   };
-
+//fetch user status from the api
   componentDidMount() {
     fetch('http://localhost:3333/auth/status', {
       headers: {
@@ -40,7 +43,7 @@ class Shop extends Component {
 
     this.loadProducts();
   }
-
+//loads products after user status fetching 
   loadProducts = direction => {
     if (direction) {
       this.setState({ productsLoading: true, products: [] });
@@ -79,7 +82,10 @@ class Shop extends Component {
       })
       .catch(this.catchError);
   };
-
+/**
+ * 
+ * @param {*} event update user status by fetching user data from API
+ */
   statusUpdateHandler = event => {
     event.preventDefault();
     fetch('http://localhost:3333/auth/status', {
@@ -107,7 +113,7 @@ class Shop extends Component {
   newProductHandler = () => {
     this.setState({ isEditing: true });
   };
-
+//product editing and creation
   startEditProductHandler = productId => {
     this.setState(prevState => {
       const loadedProduct = { ...prevState.products.find(p => p._id === productId) };
@@ -190,11 +196,18 @@ class Shop extends Component {
         });
       });
   };
-
+/**
+ * 
+ * @param {*} input 
+ * @param {*} value 
+ */
   statusInputChangeHandler = (input, value) => {
     this.setState({ status: value });
   };
-
+/**
+ * delete product by id
+ * @param {*} productId delete productId after fetching from the API
+ */
   deleteProductHandler = productId => {
     this.setState({ productsLoading: true });
     fetch('http://localhost:3333/shop/product/' + productId, {
@@ -229,7 +242,10 @@ class Shop extends Component {
   catchError = error => {
     this.setState({ error: error });
   };
-
+/**
+ * 
+ * @returns product after editing
+ */
   render() {
     return (
       <Fragment>
@@ -260,6 +276,7 @@ class Shop extends Component {
             Nouveau produit
           </Button>
         </section>
+        {/*new product creation*/}
         <section className="shop">
           {this.state.productsLoading && (
             <div style={{ textAlign: 'center', marginTop: '2rem' }}>
