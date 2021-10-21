@@ -20,7 +20,19 @@ class Signup extends Component {
         touched: false,
         validators: [required, length({ min: 5 })]
       },
-      name: {
+      firstName: {
+        value: '',
+        valid: false,
+        touched: false,
+        validators: [required]
+      },
+      lastName: {
+        value: '',
+        valid: false,
+        touched: false,
+        validators: [required]
+      },
+      phoneNumber: {
         value: '',
         valid: false,
         touched: false,
@@ -85,15 +97,37 @@ class Signup extends Component {
             touched={this.state.signupForm['email'].touched}
           />
           <Input
-            id="name"
-            label="Your Name"
+            id="firstName"
+            label="Your First Name"
             type="text"
             control="input"
             onChange={this.inputChangeHandler}
-            onBlur={this.inputBlurHandler.bind(this, 'name')}
-            value={this.state.signupForm['name'].value}
-            valid={this.state.signupForm['name'].valid}
-            touched={this.state.signupForm['name'].touched}
+            onBlur={this.inputBlurHandler.bind(this, 'firstName')}
+            value={this.state.signupForm['firstName'].value}
+            valid={this.state.signupForm['firstName'].valid}
+            touched={this.state.signupForm['firstName'].touched}
+          />
+          <Input
+            id="lastName"
+            label="Your Last Name"
+            type="text"
+            control="input"
+            onChange={this.inputChangeHandler}
+            onBlur={this.inputBlurHandler.bind(this, 'lastName')}
+            value={this.state.signupForm['lastName'].value}
+            valid={this.state.signupForm['lastName'].valid}
+            touched={this.state.signupForm['lastName'].touched}
+          />
+          <Input
+            id="phoneNumber"
+            label="Your Phone Number"
+            type="text"
+            control="input"
+            onChange={this.inputChangeHandler}
+            onBlur={this.inputBlurHandler.bind(this, 'phoneNumber')}
+            value={this.state.signupForm['phoneNumber'].value}
+            valid={this.state.signupForm['phoneNumber'].valid}
+            touched={this.state.signupForm['phoneNumber'].touched}
           />
           <Input
             id="password"
