@@ -59,7 +59,7 @@ class App extends Component {
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:3333/auth/login', {
+    fetch('https://surf-club-app.herokuapp.com/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('http://localhost:3333/auth/signup', {
+    fetch('https://surf-club-app.herokuapp.com/user/register', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -117,7 +117,9 @@ class App extends Component {
       body: JSON.stringify({
         email: authData.signupForm.email.value,
         password: authData.signupForm.password.value,
-        name: authData.signupForm.name.value
+        lastName: authData.signupForm.lastName.value,
+        firstName: authData.signupForm.firstName.value,
+        phoneNumber: authData.signupForm.phoneNumber.value,
       })
     })
       .then(res => {
