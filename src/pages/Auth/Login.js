@@ -5,6 +5,9 @@ import Button from '../../components/Button/Button';
 import { required, length, email } from '../../util/validators';
 import Auth from './Auth';
 
+/**
+ * Login component creation 
+ */
 class Login extends Component {
   state = {
     loginForm: {
@@ -23,7 +26,11 @@ class Login extends Component {
       formIsValid: false
     }
   };
-
+/**
+ * 
+ * @param {*} input receives user form input value
+ * @param {*} value verifies updated value and return login form data
+ */
   inputChangeHandler = (input, value) => {
     this.setState(prevState => {
       let isValid = true;
@@ -48,7 +55,10 @@ class Login extends Component {
       };
     });
   };
-
+/**
+ * 
+ * @param {*} input 
+ */
   inputBlurHandler = input => {
     this.setState(prevState => {
       return {
@@ -62,7 +72,11 @@ class Login extends Component {
       };
     });
   };
-
+/**
+ * 
+ * @returns login form with email, password and submit button
+ * verifies the email and password validity
+ */
   render() {
     return (
       <Auth>

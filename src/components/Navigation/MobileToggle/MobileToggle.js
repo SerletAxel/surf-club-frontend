@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './MobileToggle.css';
-
+//display toggle menu on mobile
 const mobileToggle = props => (
   <button className="mobile-toggle" onClick={props.onOpen}>
     <span className="mobile-toggle__bar" />

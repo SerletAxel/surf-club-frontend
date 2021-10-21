@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import Backdrop from '../Backdrop/Backdrop';
 import Modal from '../Modal/Modal';
-
+//handlers onClick events errors
 const errorHandler = props => (
   <Fragment>
     {props.error && <Backdrop onClick={props.onHandle} />}

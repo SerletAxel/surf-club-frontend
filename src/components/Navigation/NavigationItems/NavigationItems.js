@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './NavigationItems.css';
-
+//defines navigation menu items
 const navItems = [
   { id: 'shop', text: 'Boutique', link: '/', auth: true },
-  { id: 'login', text: 'Se connecter', link: '/', auth: false },
+  { id: 'login', text: 'Se connecter', link: '/login', auth: false },
   { id: 'signup', text: 'S\'inscrire', link: '/signup', auth: false }
 ];
 

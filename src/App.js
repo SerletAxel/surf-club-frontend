@@ -12,7 +12,10 @@ import SingleProductPage from './pages/Shop/SingleProduct/SingleProduct';
 import LoginPage from './pages/Auth/Login';
 import SignupPage from './pages/Auth/Signup';
 import './App.css';
-
+/**
+ * application main entrance component
+ * when app started, this component verifies if the user is authenticated
+ */
 class App extends Component {
   state = {
     showBackdrop: false,
@@ -23,7 +26,10 @@ class App extends Component {
     authLoading: false,
     error: null
   };
-
+/**
+ * 
+ * @returns 
+ */
   componentDidMount() {
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
@@ -55,7 +61,7 @@ class App extends Component {
     localStorage.removeItem('expiryDate');
     localStorage.removeItem('userId');
   };
-
+//fetching user / login data from API
   loginHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
@@ -105,7 +111,7 @@ class App extends Component {
         });
       });
   };
-
+//fetch user signup data to be put to the database via API
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
@@ -158,7 +164,11 @@ class App extends Component {
   errorHandler = () => {
     this.setState({ error: null });
   };
-
+/**
+ * 
+ * @returns login data and redirects user to the index page
+ * when user is not logged in and he clicks sign up he will be redirected to the /register path
+ */
   render() {
     let routes = (
       <Switch>

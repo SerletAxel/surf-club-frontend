@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Image.css';
-
+//defines image styling
 const image = props => (
   <div
     className="image"

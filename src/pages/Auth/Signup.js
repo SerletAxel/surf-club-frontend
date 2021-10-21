@@ -4,7 +4,9 @@ import Input from '../../components/Form/Input/Input';
 import Button from '../../components/Button/Button';
 import { required, length, email } from '../../util/validators';
 import Auth from './Auth';
-
+/**
+ * Signup component creation
+ */
 class Signup extends Component {
   state = {
     signupForm: {
@@ -41,7 +43,11 @@ class Signup extends Component {
       formIsValid: false
     }
   };
-
+/**
+ * 
+ * @param {*} input receives user signup form values
+ * @param {*} value verifies values validity and return signup form values
+ */
   inputChangeHandler = (input, value) => {
     this.setState(prevState => {
       let isValid = true;
@@ -66,7 +72,10 @@ class Signup extends Component {
       };
     });
   };
-
+/**
+ * 
+ * @param {*} input 
+ */
   inputBlurHandler = input => {
     this.setState(prevState => {
       return {
@@ -80,7 +89,10 @@ class Signup extends Component {
       };
     });
   };
-
+/**
+ * 
+ * @returns onSubmit the signing form with data after validation 
+ */
   render() {
     return (
       <Auth>
