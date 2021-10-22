@@ -25,7 +25,8 @@ class Shop extends Component {
   };
 //fetch user status from the api
   componentDidMount() {
-    fetch('http://localhost:3333/auth/status', {
+    //http://localhost:3333/auth/status
+    fetch('https://surf-club-app.herokuapp.com/', {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -57,7 +58,8 @@ class Shop extends Component {
       page--;
       this.setState({ productPage: page });
     }
-    fetch('http://localhost:3333/shop/products?page=' + page, {
+    //http://localhost:3333/shop/products?page=
+    fetch('https://surf-club-app.herokuapp.com/' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -88,7 +90,8 @@ class Shop extends Component {
  */
   statusUpdateHandler = event => {
     event.preventDefault();
-    fetch('http://localhost:3333/auth/status', {
+    //http://localhost:3333/auth/status
+    fetch('https://surf-club-app.herokuapp.com/', {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + this.props.token,
@@ -138,10 +141,12 @@ class Shop extends Component {
     formData.append('price', productData.price);
     formData.append('inStock', productData.inStock);
     formData.append('image', productData.image);
-    let url = 'http://localhost:3333/shop/product';
+    //http://localhost:3333/shop/product
+    let url = 'https://surf-club-app.herokuapp.com/';
     let method = 'POST';
     if (this.state.editProduct) {
-      url = 'http://localhost:3333/shop/product/' + this.state.editProduct._id;
+      //http://localhost:3333/shop/product/
+      url = 'https://surf-club-app.herokuapp.com/' + this.state.editProduct._id;
       method = 'PUT';
     }
 
@@ -210,7 +215,8 @@ class Shop extends Component {
  */
   deleteProductHandler = productId => {
     this.setState({ productsLoading: true });
-    fetch('http://localhost:3333/shop/product/' + productId, {
+    //http://localhost:3333/shop/product/
+    fetch('https://surf-club-app.herokuapp.com/' + productId, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + this.props.token
