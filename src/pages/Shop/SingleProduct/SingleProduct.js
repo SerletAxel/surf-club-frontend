@@ -22,7 +22,8 @@ class SingleProduct extends Component {
 //fetch shop product from the API by productId
   componentDidMount() {
     const productId = this.props.match.params.productId;
-    fetch('http://localhost:3333/shop/product/' + productId, {
+    //http://localhost:3333/shop/product/
+    fetch('https://surf-club-app.herokuapp.com/' + productId, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -36,7 +37,8 @@ class SingleProduct extends Component {
       .then(resData => {
         this.setState({
           name: resData.product.name,
-          image: 'http://localhost:3333/' + resData.product.imageUrl,
+          //http://localhost:3333/
+          image: 'https://surf-club-app.herokuapp.com/' + resData.product.imageUrl,
           date: new Date(resData.product.createdAt).toLocaleDateString('en-US'),
           price: resData.product.price,
           shop: resData.product.shopId,
