@@ -23,7 +23,7 @@ class SingleProduct extends Component {
   componentDidMount() {
     const productId = this.props.match.params.productId;
     //http://localhost:3333/shop/product/
-    fetch('https://surf-club-app.herokuapp.com/' + productId, {
+    fetch('https://surf-club-app.herokuapp.com/product/create' +  productId, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }

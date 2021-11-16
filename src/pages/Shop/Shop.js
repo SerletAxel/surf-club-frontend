@@ -26,7 +26,7 @@ class Shop extends Component {
 //fetch user status from the api
   componentDidMount() {
     //http://localhost:3333/auth/status
-    fetch('https://surf-club-app.herokuapp.com/', {
+    fetch('https://surf-club-app.herokuapp.com/user/archive', {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -59,7 +59,7 @@ class Shop extends Component {
       this.setState({ productPage: page });
     }
     //http://localhost:3333/shop/products?page=
-    fetch('https://surf-club-app.herokuapp.com/' + page, {
+    fetch('https://surf-club-app.herokuapp.com/shop/list' + page, {
       headers: {
         Authorization: 'Bearer ' + this.props.token
       }
@@ -91,7 +91,7 @@ class Shop extends Component {
   statusUpdateHandler = event => {
     event.preventDefault();
     //http://localhost:3333/auth/status
-    fetch('https://surf-club-app.herokuapp.com/', {
+    fetch('https://surf-club-app.herokuapp.com/user/update', {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + this.props.token,
@@ -216,7 +216,7 @@ class Shop extends Component {
   deleteProductHandler = productId => {
     this.setState({ productsLoading: true });
     //http://localhost:3333/shop/product/
-    fetch('https://surf-club-app.herokuapp.com/' + productId, {
+    fetch('https://surf-club-app.herokuapp.com/shop/create' + productId, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + this.props.token
